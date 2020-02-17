@@ -1,7 +1,7 @@
 import React from "react";
-import MenuItem from '../MenuItem/MenuItem';
+import MenuItem from "../MenuItem/MenuItem";
 
-import './Directory.scss';
+import "./Directory.scss";
 
 class Directory extends React.Component {
   constructor() {
@@ -47,16 +47,12 @@ class Directory extends React.Component {
 
   render() {
     return (
-        <div className="directory-menu">
-            {/* Array deconstruction from map */}
-            {this.state.sections.map(({title, imageUrl, id, size}) => (
-                <MenuItem 
-                    key={id} 
-                    title={title} 
-                    imageUrl={imageUrl}
-                    size={size}></MenuItem>
-            ))}
-        </div>
+      <div className="directory-menu">
+        {/* Array deconstruction using spread, assigns key+value pairs */}
+        {this.state.sections.map(({ id, ...sectionProps }) => (
+          <MenuItem key={id} {...sectionProps}></MenuItem>
+        ))}
+      </div>
     );
   }
 }
