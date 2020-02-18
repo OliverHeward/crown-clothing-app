@@ -12,6 +12,37 @@ const config = {
     appId: "1:621129795595:web:e360da68e53bcc654cdf0e"
 };
 
+// User Auth Object to store in database - ASYNC
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+    // Check if there is a userAuth object, otherwise return out of function.
+    if (!userAuth) return;
+
+    // User Reference
+    const userRef = firestore.doc(`users/${userAuth.uid}`);
+    // async querySnapshot
+    const snapShot = await userRef.get();
+
+    // If snapshot does not exist (account is not in DB)
+    if (!snapShot.exists) {
+        const { displayName, email } = userAuth;
+        // Create new date when this is envoked
+        const createdAt = new Date();
+        // Create new users if Snapshot doesn't exist
+        try {
+            await userRef.set({
+                displayName, 
+                email,
+                createdAt,
+                ...additionalData
+            })
+        } catch (error) {
+            console.log('error creating user', error.message);
+        }
+    }
+    
+    return userRef;
+}
+
 firebase.initializeApp(config);
 
 export const auth = firebase.auth(); // Auth
