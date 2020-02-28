@@ -10,7 +10,6 @@ import Auth from './Pages/Auth/Auth';
 import { auth, createUserProfileDocument } from './Firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/actions';
 import './App.css';
-import SignIn from './Components/SignIn/SignIn';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
