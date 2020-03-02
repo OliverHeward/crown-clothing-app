@@ -16,4 +16,23 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
     // if not found in array return new array with existing items
     // on the first time an item is added, it will be set a quantity of 1
     return [...cartItems, { ...cartItemToAdd, quantity: 1 }]
-}
+};
+
+// Takes in the existing cart items and the cart item to remove
+export const removeItemFromCart = (cartItems, cartItemToRemove) => {
+    const existingCartItem = cartItems.find(
+        cartItem => cartItem.id === cartItemToRemove.id
+    )
+
+    // If the Cart Item is at quantity 1 -> then remove it
+    if(existingCartItem.quantity === 1) {
+        return cartItems.filter(cartItem => cartItem.id !== cartItemToRemove.id);
+    }  
+
+    // If the cart item is OVER quantity 1 -> then decrease it by 1
+    return cartItems.map(cartItem => 
+        cartItem.id === cartItemToRemove.id ? 
+        { ...cartItem, quantity: cartItem.quantity - 1}
+        : cartItem
+    );
+};
