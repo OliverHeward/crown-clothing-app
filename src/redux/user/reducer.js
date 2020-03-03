@@ -1,24 +1,24 @@
-import { userActionTypes } from './types';
+import { userActionTypes } from "./types";
 
 // Set Initial State
 const INITIAL_STATE = {
-    currentUser: null
-}
+  currentUser: null
+};
 
 // User state set to null while action type is switched
 // returns null if DEFAULT
 const userReducer = (state = INITIAL_STATE, action) => {
-    switch(action.type) {
-        case userActionTypes.SET_CURRENT_USER:
-            // Return current state, then pass payload to currentUser state
-            return {
-                ...state,
-                currentUser: action.payload
-            }
-        default: 
-            // return current state
-            return state;
-    }
-}
+  switch (action.type) {
+    case userActionTypes.SET_CURRENT_USER:
+      // Return current state, then pass payload to currentUser state
+      return {
+        ...state,
+        currentUser: action.payload
+      };
+    default:
+      // return current state
+      return state;
+  }
+};
 
 export default userReducer;

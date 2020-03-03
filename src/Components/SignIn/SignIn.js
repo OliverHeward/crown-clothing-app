@@ -1,9 +1,9 @@
 import React from "react";
 
-import Input from '../Input/Input';
-import Button from '../Button/Button';
+import Input from "../Input/Input";
+import Button from "../Button/Button";
 
-import { auth, signInWithGoogle } from '../../Firebase/firebase.utils';
+import { auth, signInWithGoogle } from "../../Firebase/firebase.utils";
 
 import "./SignIn.scss";
 
@@ -21,7 +21,7 @@ class SignIn extends React.Component {
 
     const { email, password } = this.state;
 
-    try { 
+    try {
       await auth.signInWithEmailAndPassword(email, password);
       this.setState({ email: "", password: "" });
     } catch (error) {
@@ -57,9 +57,12 @@ class SignIn extends React.Component {
             required
           />
           <div className="buttons">
-          <Button type="submit" value="Submit Form">Sign In</Button>
-          <Button onClick={signInWithGoogle} isGoogleSignIn>Sign In With 
-          Google</Button>
+            <Button type="submit" value="Submit Form">
+              Sign In
+            </Button>
+            <Button onClick={signInWithGoogle} isGoogleSignIn>
+              Sign In With Google
+            </Button>
           </div>
         </form>
       </div>
