@@ -43,6 +43,42 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+export const convertCollectionsSnapshotToMap = collectionsSnapshot => {
+  // collections.docs returned from the snapshot
+  const transformedCollection = collectionsSnapshot.docs.map(docSnapshot => {
+    // destruct title and items from data
+    const { title, items } = docSnapshot.data();
+    // return the data in objects
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: docSnapshot.id,
+      title,
+      items
+    }
+  });
+  // empty accumulator as second param
+  return transformedCollection.reduce((accumulator, collection) => {
+    // object up until this point - set the title as the key to the collection
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {})
+};
+
+
+// Reusable Util 
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+  const collectionRef = firestore.collection(collectionKey);
+  // batch request
+  const batch = firestore.batch();
+  // for each objects to add, for each object, we want to get each document at an empty string and randomly generate an ID 
+  objectsToAdd.forEach(obj => {
+    const newDocRef = collectionRef.doc();
+    batch.set(newDocRef, obj); // set a batch request for each collection
+  });
+
+  return await batch.commit(); // fires off the batch request, returns a promise. Resolves a void(null) value.
+};
+
 firebase.initializeApp(config);
 
 export const auth = firebase.auth(); // Auth
