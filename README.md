@@ -7,7 +7,9 @@ E-Commerce Web App built with React.
 Technologies used:
 - React
 - Redux
+- Redux Sagas
 - React Router
+- Thunk
 - Reselect
 - SASS/SCSS (CSS)
 - Babel
